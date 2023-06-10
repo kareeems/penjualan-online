@@ -1,0 +1,35 @@
+version: "3.9"
+
+networks:
+  local:
+    name: local
+
+services:
+  app:
+    container_name: app-penjualan-online
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - /var/www/html/vendor
+      - ./penjualan-online:/var/www/html
+    depends_on:
+      - mongo
+    networks:
+      - local
+
+  mongo:
+    container_name: mongodb-penjualan-online
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./docker/mongo/db:/data/db
+    networks:
+      - local

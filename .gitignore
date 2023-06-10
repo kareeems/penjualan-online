@@ -1,0 +1,10 @@
+# Editor
+.vscode
+/materi
+
+# Container file
+/docker/mongo/*
+!/docker/mongo/.gitkeep
+
+# Config
+/penjualan-online/config/*.php
